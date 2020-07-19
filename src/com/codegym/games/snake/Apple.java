@@ -3,7 +3,7 @@ package com.codegym.games.snake;
 import com.codegym.engine.cell.*;
 
 public class Apple extends GameObject {
-    protected static final String APPLE_SIGN = "\uD83C\uDF4E";
+    private static final String APPLE_SIGN = "\uD83C\uDF4E";
     public boolean isAlive = true;
 
     Apple(int x, int y) {
@@ -11,6 +11,6 @@ public class Apple extends GameObject {
     }
 
     public void draw(Game game) {
-        game.setCellValueEx(this.x, this.y, Color.NONE, APPLE_SIGN, Color.GREEN, 75);
+        game.setCellValueEx(this.x, this.y, Color.NONE, APPLE_SIGN, Color.RED, 75);
     }
 }

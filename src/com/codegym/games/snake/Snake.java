@@ -37,7 +37,7 @@ public class Snake {
         }
     }
 
-    public void move(Apple apple, SlowApple slowApple) {
+    public void move(Apple apple, SlowGreenApple slowGreenApple) {
         GameObject newHead = createNewHead();
         boolean outOfAxisX = newHead.x < 0 || newHead.x >= SnakeGame.WIDTH;
         boolean outOfAxisY = newHead.y < 0 || newHead.y >= SnakeGame.HEIGHT;
@@ -46,7 +46,7 @@ public class Snake {
             snakeParts.add(0, newHead);
             if (this.snakeParts.get(0).x == apple.x && this.snakeParts.get(0).y == apple.y) { apple.isAlive = false; }
             else { this.removeTail(); }
-            if (this.snakeParts.get(0).x == slowApple.x && this.snakeParts.get(0).y == slowApple.y) { slowApple.isAlive = false; }
+            if (this.snakeParts.get(0).x == slowGreenApple.x && this.snakeParts.get(0).y == slowGreenApple.y) { slowGreenApple.isAlive = false; }
         }
     }
 

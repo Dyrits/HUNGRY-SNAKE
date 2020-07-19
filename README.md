@@ -31,12 +31,18 @@ Several elements (such as the game engine) have been provided by the related cou
 - A special type of apple has been added: Slow Apple. It reduces the speed of the game.
 
 </details>
+<details markdown="block">
+<summary>V1.02</summary>  
+
+- The Slow Apple has been renamed: Slow Green Apple. It uses a different unicode character.
+
+</details>
 
 ### Try it!
 You can try the game on [CodeGym](https://codegym.cc/projects/apps/29411).  
 
 ### Status
-V1.01 - Completed
+V1.02 - Completed
 
 #### Last update
 19/07/2020  

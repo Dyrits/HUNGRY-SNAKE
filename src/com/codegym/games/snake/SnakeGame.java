@@ -9,7 +9,7 @@ public class SnakeGame extends Game {
     private static final int GOAL = 100;
     private Snake snake;
     private Apple apple;
-    private SlowApple slowApple;
+    private SlowGreenApple slowGreenApple;
     private int turnDelay, score;
     private boolean isGameStopped;
 
@@ -39,21 +39,21 @@ public class SnakeGame extends Game {
         }
         snake.draw(this);
         apple.draw(this);
-        if (slowApple.isAlive && slowApple.displayed) { slowApple.draw(this); }
+        if (slowGreenApple.isAlive && slowGreenApple.displayed) { slowGreenApple.draw(this); }
     }
 
-    private void createNewApple(boolean special) {
+    private void createNewApple(boolean snowFlake) {
         int x;
         int y;
         Apple randomApple = null;
-        SlowApple specialRandomApple = null;
+        SlowGreenApple specialRandomApple = null;
         do {
             x = getRandomNumber(WIDTH);
             y = getRandomNumber(HEIGHT);
-            if (special) { specialRandomApple = new SlowApple(x, y);}
+            if (snowFlake) { specialRandomApple = new SlowGreenApple(x, y);}
             else { randomApple = new Apple(x, y); }
-        } while (snake.checkCollision(special ? specialRandomApple : randomApple));
-        if (special) { slowApple = specialRandomApple; }
+        } while (snake.checkCollision(snowFlake ? specialRandomApple : randomApple));
+        if (snowFlake) { slowGreenApple = specialRandomApple; }
         else { apple = randomApple; }
     }
 
@@ -65,43 +65,43 @@ public class SnakeGame extends Game {
     private void gameOver() {
         isGameStopped = true;
         stopTurnTimer();
-        showMessageDialog(Color.FIREBRICK, "GAME OVER!", Color.WHITE, 45);
+        showMessageDialog(Color.FIREBRICK, "GAME OVER! SCORE: " + this.score, Color.WHITE, 25);
     }
 
     private void win() {
         isGameStopped = true;
         stopTurnTimer();
-        showMessageDialog(Color.DARKGREEN, "VICTORY, THE SNAKE IS NOT HUNGRY ANYMORE!", Color.WHITE, 45);
+        showMessageDialog(Color.DARKGREEN, "VICTORY, THE SNAKE IS NOT HUNGRY ANYMORE! SCORE: " + this.score, Color.WHITE, 25);
     }
 
     @Override
     public void onTurn(int integer) {
         System.out.println(turnDelay);
-        snake.move(apple, slowApple);
+        snake.move(apple, slowGreenApple);
         if (!apple.isAlive) {
             setScore(this.score += 5);
-            setTurnTimer(this.turnDelay -= 10);
+            setTurnTimer(this.turnDelay -= this.turnDelay < 100 ? 5 : 10);
             createNewApple();
         }
-        addSlowApple();
+        addSlowGreenApple();
         if (!snake.isAlive) { gameOver(); }
         if (snake.getLength() > GOAL) { win(); }
         drawScene();
     }
 
-    public void addSlowApple() {
-        if (this.score % 45 == 0 && this.score != 0) { slowApple.willAppear = true; }
-        boolean highSpeed = this.turnDelay < 50 && !slowApple.displayed;
-        boolean isAvailable = this.score % 50 == 0 && slowApple.willAppear && !slowApple.displayed;
+    public void addSlowGreenApple() {
+        if (this.score % 45 == 0 && this.score != 0) { slowGreenApple.willAppear = true; }
+        boolean highSpeed = this.turnDelay < 50 && !slowGreenApple.displayed;
+        boolean isAvailable = this.score % 50 == 0 && slowGreenApple.willAppear && !slowGreenApple.displayed;
         if (isAvailable || highSpeed) {
             createNewApple(true);
-            while (slowApple.x == apple.x && slowApple.y == apple.y) { createNewApple(true); }
+            while (slowGreenApple.x == apple.x && slowGreenApple.y == apple.y) { createNewApple(true); }
         }
-        if (!slowApple.isAlive && slowApple.displayed) {
+        if (!slowGreenApple.isAlive && slowGreenApple.displayed) {
             setTurnTimer(this.turnDelay += (new Random().nextInt(75)) + 1);
-            slowApple.x = -1;
-            slowApple.y = -1;
-            slowApple.displayed = false;
+            slowGreenApple.x = -1;
+            slowGreenApple.y = -1;
+            slowGreenApple.displayed = false;
         }
     }
 
