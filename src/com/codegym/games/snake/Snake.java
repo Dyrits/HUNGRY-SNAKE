@@ -119,5 +119,10 @@ public class Snake {
         return this.snakeParts.size();
     }
 
+    /**
+     * Get a snake's part (head or part of the tail).
+     * @param index int | Index of the part, 0 being the head.
+     * @return GameObject | Snake's part.
+     */
     public GameObject getSnakeParts(int index) { return this.snakeParts.get(index); }
 }
