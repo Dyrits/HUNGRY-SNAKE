@@ -38,7 +38,7 @@ Several elements (such as the game engine) have been provided by the related cou
 
 </details>
 <details markdown="block">
-<summary>V1.02</summary>  
+<summary>V1.03</summary>  
 
 - Pressing a direction key should not remove the dialog message (at the end of a game) anymore.
 
