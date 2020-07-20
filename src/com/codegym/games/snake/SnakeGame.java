@@ -55,7 +55,7 @@ public class SnakeGame extends Game {
     /**
      *
      * @param slowApple boolean | Boolean value to create a Slow Green Apple if true and a normal one if false.
-     *                  The default value is true.
+     *                  The default value is false.
      */
     private void createNewApple(boolean slowApple) {
         int x;
