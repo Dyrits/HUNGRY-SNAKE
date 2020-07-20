@@ -14,7 +14,6 @@ public class SlowGreenApple extends Apple {
         this.displayed = true;
     }
 
-
     @Override
     public void draw(Game game) {
         game.setCellValueEx(this.x, this.y, Color.NONE, APPLE_SIGN, Color.GREEN, 75);

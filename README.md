@@ -37,13 +37,20 @@ Several elements (such as the game engine) have been provided by the related cou
 - The Slow Apple has been renamed: Slow Green Apple. It uses a different unicode character.
 
 </details>
+<details markdown="block">
+<summary>V1.02</summary>  
+
+- Pressing a direction key should not remove the dialog message (at the end of a game) anymore.
+
+</details>
+
 
 ### Try it!
 You can try the game on [CodeGym](https://codegym.cc/projects/apps/29411).  
 
 ### Status
-V1.02 - Completed
+V1.03 - Completed
 
 #### Last update
-19/07/2020  
-(README | 19/07/2020)
+20/07/2020  
+(README | 20/07/2020)

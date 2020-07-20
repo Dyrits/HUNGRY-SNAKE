@@ -65,28 +65,30 @@ public class SnakeGame extends Game {
     private void gameOver() {
         isGameStopped = true;
         stopTurnTimer();
-        showMessageDialog(Color.FIREBRICK, "GAME OVER! SCORE: " + this.score, Color.WHITE, 25);
+        showMessageDialog(Color.FIREBRICK, "GAME OVER!\nSCORE: " + this.score, Color.WHITE, 25);
     }
 
     private void win() {
         isGameStopped = true;
         stopTurnTimer();
-        showMessageDialog(Color.DARKGREEN, "VICTORY, THE SNAKE IS NOT HUNGRY ANYMORE! SCORE: " + this.score, Color.WHITE, 25);
+        showMessageDialog(Color.DARKGREEN, "VICTORY!\nTHE SNAKE IS NOT HUNGRY ANYMORE!\nSCORE: " + this.score, Color.WHITE, 25);
     }
 
     @Override
     public void onTurn(int integer) {
-        System.out.println(turnDelay);
-        snake.move(apple, slowGreenApple);
-        if (!apple.isAlive) {
-            setScore(this.score += 5);
-            setTurnTimer(this.turnDelay -= this.turnDelay < 100 ? 5 : 10);
-            createNewApple();
+        if (!isGameStopped) {
+            System.out.println(turnDelay);
+            snake.move(apple, slowGreenApple);
+            if (!apple.isAlive) {
+                setScore(this.score += 5);
+                setTurnTimer(this.turnDelay -= this.turnDelay < 100 ? 5 : 10);
+                createNewApple();
+            }
+            addSlowGreenApple();
+            drawScene();
         }
-        addSlowGreenApple();
         if (!snake.isAlive) { gameOver(); }
         if (snake.getLength() > GOAL) { win(); }
-        drawScene();
     }
 
     public void addSlowGreenApple() {
@@ -109,16 +111,16 @@ public class SnakeGame extends Game {
     public void onKeyPress(Key key) {
         switch (key) {
             case UP:
-                if (snake.getSnakeParts(0).x != snake.getSnakeParts(1).x) { snake.setDirection(Direction.UP); }
+                if (!isGameStopped && snake.getSnakeParts(0).x != snake.getSnakeParts(1).x) { snake.setDirection(Direction.UP); }
                 break;
             case DOWN:
-                if (snake.getSnakeParts(0).x != snake.getSnakeParts(1).x) { snake.setDirection(Direction.DOWN);; }
+                if (!isGameStopped && snake.getSnakeParts(0).x != snake.getSnakeParts(1).x) { snake.setDirection(Direction.DOWN);; }
                 break;
             case LEFT:
-                if (snake.getSnakeParts(0).y != snake.getSnakeParts(1).y) { snake.setDirection(Direction.LEFT); }
+                if (!isGameStopped && snake.getSnakeParts(0).y != snake.getSnakeParts(1).y) { snake.setDirection(Direction.LEFT); }
                 break;
             case RIGHT:
-                if (snake.getSnakeParts(0).y != snake.getSnakeParts(1).y) { snake.setDirection(Direction.RIGHT); }
+                if (!isGameStopped && snake.getSnakeParts(0).y != snake.getSnakeParts(1).y) { snake.setDirection(Direction.RIGHT); }
                 break;
             case SPACE:
                 if (isGameStopped) { createGame(); }
