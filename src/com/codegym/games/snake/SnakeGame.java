@@ -13,12 +13,18 @@ public class SnakeGame extends Game {
     private int turnDelay, score;
     private boolean isGameStopped;
 
+    /**
+     * Launch the game.
+     */
     @Override
     public void initialize() {
         setScreenSize(WIDTH, HEIGHT);
         createGame();
     }
 
+    /**
+     * Create a game, creating and initializing the different objects, and setting up the timer.
+     */
     private void createGame() {
         this.score = 0;
         setScore(this.score);
@@ -31,6 +37,9 @@ public class SnakeGame extends Game {
         drawScene();
     }
 
+    /**
+     * Draw the different cells of the game, the snake and the apples.
+     */
     private void drawScene() {
         for (int x = 0; x < WIDTH; x ++) {
             for (int y = 0; y < HEIGHT; y ++) {
@@ -39,10 +48,16 @@ public class SnakeGame extends Game {
         }
         snake.draw(this);
         apple.draw(this);
+        // The green apple is not drawn every turn.
         if (slowGreenApple.isAlive && slowGreenApple.displayed) { slowGreenApple.draw(this); }
     }
 
-    private void createNewApple(boolean snowFlake) {
+    /**
+     *
+     * @param slowApple boolean | Boolean value to create a Slow Green Apple if true and a normal one if false.
+     *                  The default value is true.
+     */
+    private void createNewApple(boolean slowApple) {
         int x;
         int y;
         Apple randomApple = null;
@@ -50,10 +65,10 @@ public class SnakeGame extends Game {
         do {
             x = getRandomNumber(WIDTH);
             y = getRandomNumber(HEIGHT);
-            if (snowFlake) { specialRandomApple = new SlowGreenApple(x, y);}
+            if (slowApple) { specialRandomApple = new SlowGreenApple(x, y);}
             else { randomApple = new Apple(x, y); }
-        } while (snake.checkCollision(snowFlake ? specialRandomApple : randomApple));
-        if (snowFlake) { slowGreenApple = specialRandomApple; }
+        } while (snake.checkCollision(slowApple ? specialRandomApple : randomApple));
+        if (slowApple) { slowGreenApple = specialRandomApple; }
         else { apple = randomApple; }
     }
 
@@ -62,18 +77,29 @@ public class SnakeGame extends Game {
     }
 
 
+    /**
+     * Turn off the timer and display a message dialog when the game is lost.
+     */
     private void gameOver() {
         isGameStopped = true;
         stopTurnTimer();
         showMessageDialog(Color.FIREBRICK, "GAME OVER!\nSCORE: " + this.score, Color.WHITE, 25);
     }
 
+    /**
+     * Turn off the timer and display a message dialog when the game is won.
+     */
     private void win() {
         isGameStopped = true;
         stopTurnTimer();
         showMessageDialog(Color.DARKGREEN, "VICTORY!\nTHE SNAKE IS NOT HUNGRY ANYMORE!\nSCORE: " + this.score, Color.WHITE, 25);
     }
 
+    /**
+     * Handle the different events happening in one turn.
+     * The snake moves, the timer is adjusted, the apples are created and the display is refreshed.
+     * @param integer int | The parameter is not used.
+     */
     @Override
     public void onTurn(int integer) {
         if (!isGameStopped) {
@@ -84,15 +110,19 @@ public class SnakeGame extends Game {
                 setTurnTimer(this.turnDelay -= this.turnDelay < 100 ? 5 : 10);
                 createNewApple();
             }
-            addSlowGreenApple();
+            checkSlowGreenApple();
             drawScene();
         }
         if (!snake.isAlive) { gameOver(); }
         if (snake.getLength() > GOAL) { win(); }
     }
 
-    public void addSlowGreenApple() {
+    /**
+     * Create a Slow Green Apple under various conditions.
+     */
+    public void checkSlowGreenApple() {
         if (this.score % 45 == 0 && this.score != 0) { slowGreenApple.willAppear = true; }
+        // If the turn delay is too low (under 50 milliseconds), a Slow Green Apple is created.
         boolean highSpeed = this.turnDelay < 50 && !slowGreenApple.displayed;
         boolean isAvailable = this.score % 50 == 0 && slowGreenApple.willAppear && !slowGreenApple.displayed;
         if (isAvailable || highSpeed) {
@@ -100,6 +130,7 @@ public class SnakeGame extends Game {
             while (slowGreenApple.x == apple.x && slowGreenApple.y == apple.y) { createNewApple(true); }
         }
         if (!slowGreenApple.isAlive && slowGreenApple.displayed) {
+            // The speed of the game is randomly reduced when a Slow Green Apple has been eaten.
             setTurnTimer(this.turnDelay += (new Random().nextInt(75)) + 1);
             slowGreenApple.x = -1;
             slowGreenApple.y = -1;
@@ -107,6 +138,10 @@ public class SnakeGame extends Game {
         }
     }
 
+    /**
+     * Handle keyboard input from the user.
+     * @param key Key | Input from the user.
+     */
     @Override
     public void onKeyPress(Key key) {
         switch (key) {
