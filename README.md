@@ -14,6 +14,9 @@ The original README's changelog:
 - V1.02: the Slow Apple renamed "Slow Green Apple", with a different unicode character.
 - V1.03: pressing a direction key no longer removes the dialog message at the end of a game.
 
+
+The original task description from CodeGym is preserved in [ASSIGNMENT.md](ASSIGNMENT.md).
+
 ## Built With
 
 - Java
